@@ -1,25 +1,24 @@
+'use client'
 import { Slider, styled, Box, Grid, Typography, Button, TextField } from "@mui/material";
 import MuiInput from '@mui/material/Input';
 import React, { useState, useEffect } from "react";
 import { theme } from "../pages/_app";
 import { PropaneSharp } from "@mui/icons-material";
-import { useContractRead } from "wagmi";
-import { abi } from "../abi/IERC20.json";
+import { useContractRead, usePrepareContractWrite, useContractWrite } from "wagmi";
+import { abi  as ERC20abi} from "../abi/IERC20.json";
+import {abi as StrategyAbi} from "../abi/IStrategyInterface.json";
 import { useAccount } from "wagmi";
+import {daiAdress, strategyAdress} from "../constants/constants";
+
 
 
 
 export const StyledSlider = styled(Slider)(({theme}) => ({
-
     margin: 'auto',
-
-
 }))
 
 export const StyledText = styled(Typography)(({theme}) => ({
-
     fontFamily: 'Inter'
-
 }))
 
 const StyledButton =  styled(Button, {shouldForwardProp: (prop) => prop !== "color" && prop !== 'myProp',})<{ props : {width : number, height : number, color : string} }> (({theme,props, children}) => ({
@@ -46,16 +45,19 @@ interface SliderProps{
     value: number;
 }
 
-export default function InputSlider(props: SliderProps) {
+export default function DepositSlider(props: SliderProps) {
 
-    const daiAdress = '0x6b175474e89094c44da98b954eedeac495271d0f';
-  
+    
+    const [daiBalance, setDaiBalance] = useState<number>(0);
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
       props.func(newValue);
+      setDaiBalance(Number(TokenBalance) * (10e-18)* (newValue as number/100));
     };
   
     const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      props.func(event.target.value === '' ? '' : Number(event.target.value));
+      //props.func(event.target.value  === '' ? 0 : Number(event.target.value));
+      setDaiBalance(event.target.value  === '' ? 0 : Number(event.target.value));
+
     };
   
     const handleBlur = () => {
@@ -66,21 +68,32 @@ export default function InputSlider(props: SliderProps) {
       }
     };
 
+    
+
     const { address : owner, isConnected, isConnecting } = useAccount() //from wagmi
 
 
-    const { data: TokenBalance, error } = useContractRead({
+    const { data: TokenBalance } = useContractRead({
       address: daiAdress,
-      abi: abi,
+      abi: ERC20abi,
       functionName: 'balanceOf',
-      args: [owner],
-    }) as { data: bigint; error: Error };
+      args: ['0xa478c2975ab1ea89e8196811f51a7b7ade33eb11'],
+    }) as { data: bigint};
 
-    const displayTokenBalance = (Number(TokenBalance) * 10**(-18)).toFixed(2);
+
+
+    const {config : depositConfig } = usePrepareContractWrite({
+      address: strategyAdress,
+      abi: StrategyAbi,
+      functionName: 'deposit',
+      args: [TokenBalance ? BigInt(TokenBalance)*(BigInt(props.value)/BigInt(100)) : BigInt(0), owner],
+    });
+
+    const { data : depositData, isLoading, isSuccess, write : deposit } = useContractWrite(depositConfig);
 
     
 
-    console.log(TokenBalance);
+    console.log("DAI available %e", TokenBalance);
   
     return (
       <Box width={props.width}>
@@ -125,11 +138,17 @@ export default function InputSlider(props: SliderProps) {
 
         </Grid>
         <Grid container alignItems={'center'}>
-          <Grid item xs={8}>
-          <TextField id="outlined-basic" label="Deposit" variant="outlined" value={displayTokenBalance* props.value/100}/>
+          <Grid item xs={4}>
+            <TextField id="outlined-basic" label="Deposit DAI" variant="outlined" onChange={handleInputChange}/>
           </Grid>
+          <Grid item xs={4}>
+            <Typography variant="h6" component="div" paddingX={3}>
+                {daiBalance.toFixed(2)}
+            </Typography>
+          </Grid>
+
           <Grid item xs={4} justifyContent={'flex-end'}>
-            <Button variant="contained" size="large">Deposit</Button>
+            <Button variant="contained" size="large" onClick={() => deposit?.()}>Deposit DAI</Button>
           </Grid>
         </Grid>
         <Grid container spacing={2} alignItems="center" justifyContent='center' marginTop={2}>
