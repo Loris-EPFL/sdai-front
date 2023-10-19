@@ -23,13 +23,15 @@ export function DepositField() {
               </Grid>
 
             </Grid>
+            <Grid>
             {toggle ? (
-              <DepositSlider width={500} value={value} func={setValue}/>
+              <DepositSlider />
             ) : (
 
-              <WithdrawSlider width={500} value={value} func={setValue}/>
+              <WithdrawSlider />
 
             )}
+            </Grid>
         </Box>
 
     )

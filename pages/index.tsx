@@ -1,3 +1,4 @@
+'use client';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
 import type { NextPage } from 'next';
 import Head from 'next/head';
@@ -9,7 +10,6 @@ import { useState } from 'react';
 import { DepositField } from '../components/depositField';
 
 const Home: NextPage = () => {
-  const [toggle, setToggle] = useState(true);
   return (
     <div className={styles.container}>
        <Header />
@@ -40,7 +40,7 @@ const Home: NextPage = () => {
       </main>
 
       <footer className={styles.footer}>
-        <a href="https://rainbow.me" rel="noopener noreferrer" target="_blank">
+        <a href="https://github.com/Loris-EPFL/sdai-vault" rel="noopener noreferrer" target="_blank">
           Made with ❤️ by Alberto and Loris 
         </a>
       </footer>

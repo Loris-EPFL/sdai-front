@@ -43,20 +43,17 @@ const StyledButton =  styled(Button, {shouldForwardProp: (prop) => prop !== "col
 
 
 
-interface SliderProps{
-    width?: number;
-    func : Function;
-    value: number;
-}
 
-export default function WithdrawSlider(props: SliderProps) {
-
+export default function WithdrawSlider() {
+    const [value, setValue] = useState<number>(
+        30,
+      );
    
   
     const [vaultBalance, setVaultBalance] = useState<number>(0);
 
     const handleSliderChange = (event: Event, newValue: number | number[]) => {
-      props.func(newValue);
+      setValue(newValue as number);
       setVaultBalance(Number(VaultBalance) * (10e-18)* (newValue as number/100));
 
     };
@@ -66,10 +63,10 @@ export default function WithdrawSlider(props: SliderProps) {
     };
   
     const handleBlur = () => {
-      if (props.value < 0) {
-        props.func(0);
-      } else if (props.value > 100) {
-        props.func(100);
+      if (value < 0) {
+        setValue(0);
+      } else if (value > 100) {
+        setValue(100);
       }
     };
 
@@ -89,7 +86,7 @@ export default function WithdrawSlider(props: SliderProps) {
       address: strategyAdress,
       abi: StrategyAbi,
       functionName: 'withdraw',
-      args: [VaultBalance*BigInt(props.value)/BigInt(100), owner, owner],
+      args: [VaultBalance*BigInt(value)/BigInt(100), owner, owner],
     });
 
     const { data : withdrawData, isLoading, isSuccess, write : withdraw } = useContractWrite(withdrawConfig);
@@ -99,7 +96,7 @@ export default function WithdrawSlider(props: SliderProps) {
     console.log("Shares of Vault available %e", VaultBalance);
   
     return (
-      <Box width={props.width}>
+      <Box width={500}>
         <Typography id="input-slider" color={theme.palette.text.secondary} gutterBottom>
           Select Amout of Vault Shares to withdraw
         </Typography>
@@ -110,31 +107,31 @@ export default function WithdrawSlider(props: SliderProps) {
                 onChange={handleInputChange}
                 onBlur={handleBlur}
                 variant="h4"
-                >{props.value}%
+                >{value}%
                 </StyledText>
 
             </Grid>
 
             <Grid item xs={2}>
-                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => props.func(25)}>
+                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => setValue(25)}>
                     25%
                 </StyledButton>
             </Grid>
 
             <Grid item xs={2}>
-                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => props.func(50)}>
+                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => setValue(50)}>
                     50%
                 </StyledButton>
             </Grid>
 
             <Grid item xs={2}>
-                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => props.func(75)}>
+                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => setValue(75)}>
                     75%
                 </StyledButton>
             </Grid>
 
             <Grid item xs={2}>
-                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => props.func(100)}>
+                <StyledButton props={{width: 10, height: 20, color : theme.palette.secondary.main}} size="small" onClick={() => setValue(100)}>
                     Max
                 </StyledButton>
             </Grid>
@@ -157,7 +154,7 @@ export default function WithdrawSlider(props: SliderProps) {
           
           <Grid item xs>
             <StyledSlider
-              value={typeof props.value === 'number' ? props.value : 0}
+              value={typeof value === 'number' ? value : 0}
               onChange={handleSliderChange}
               aria-labelledby="input-slider"
               color="secondary"
