@@ -20,17 +20,15 @@ const Home: NextPage = () => {
           sDAI leveraged yield farming vault
         </h1>
 
-        <p className={styles.description}>
           <DepositField />
-        </p>
 
         <div className={styles.grid}>
-          <a className={styles.card} href="https://rainbowkit.com">
+          <a className={styles.card} href="https://github.com/Loris-EPFL/sdai-vault">
             <h2>Vault Documentation</h2>
             <p>Learn how the vault works by leveraging GHO by AAVE</p>
           </a>
 
-          <a className={styles.card} href="https://wagmi.sh">
+          <a className={styles.card} href="https://yearn.fi/veyfi">
             <h2>Boost your dYFI</h2>
             <p>Learn how to boost you dYFI emissions with veYFI</p>
           </a>

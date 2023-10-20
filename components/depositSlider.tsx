@@ -93,7 +93,7 @@ export default function DepositSlider() {
   
     return (
       <Box width={500}>
-        <Typography id="input-slider" color={theme.palette.text.secondary} gutterBottom>
+        <Typography id="input-slider" color={theme.palette.text.secondary} paddingBottom={4} display={'flex'} justifyContent={'center'}>
           Select Amout of DAI to deposit
         </Typography>
         <Grid container spacing={9} alignItems="center" paddingBottom={4}>

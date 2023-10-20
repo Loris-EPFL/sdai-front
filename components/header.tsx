@@ -5,6 +5,7 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
+import { Grid } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Switch from '@mui/material/Switch';
@@ -33,7 +34,7 @@ export default function MenuAppBar() {
   };
 
   return (
-    <Box sx={{ flexGrow: 1 , color : '#151515'}}>
+    <Box sx={{ color : '#151515'}}>
       
       <AppBar position="static">
         <Toolbar sx={{backgroundColor : '#151515'}}>
@@ -49,18 +50,18 @@ export default function MenuAppBar() {
               width={50}
               height={50}/>
           </IconButton>
-          <Typography variant="h6" component="div" paddingX={3}>
+          <Typography variant="h6" component="div" paddingX={3} color={'#ffffff'}>
             Vault
           </Typography>
-          <Typography variant="h6" component="div" paddingX={3}>
+          <Typography variant="h6" component="div" paddingX={3} color={'#ffffff'}>
             About
           </Typography>
-          <Typography variant="h6" component="div" paddingX={3}>
+          <Typography variant="h6" component="div" paddingX={3} color={'#ffffff'}>
             Vote
           </Typography>
-          <Box sx={{  display: 'flex' , justifyContent: 'flex-end' , alignContent : 'flex-end'}}>
+          <Grid item xs display={'flex'} justifyContent={'flex-end'}>
             <ConnectButton />
-          </Box>
+          </Grid>
         </Toolbar>
       </AppBar>
     </Box>

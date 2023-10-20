@@ -17,10 +17,8 @@ import { ThemeProvider, createTheme } from '@mui/material';
 const { chains, publicClient, webSocketPublicClient } = configureChains(
   [
     mainnet,
-    polygon,
-    optimism,
-    arbitrum,
-    ...(process.env.NEXT_PUBLIC_ENABLE_TESTNETS === 'true' ? [goerli] : []),
+    goerli,
+    
   ],
   [publicProvider()]
 );

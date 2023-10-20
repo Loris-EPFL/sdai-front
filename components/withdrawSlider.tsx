@@ -86,7 +86,7 @@ export default function WithdrawSlider() {
       address: strategyAdress,
       abi: StrategyAbi,
       functionName: 'withdraw',
-      args: [VaultBalance*BigInt(value)/BigInt(100), owner, owner],
+      args: [VaultBalance ? BigInt(VaultBalance)*BigInt(value)/BigInt(100) : BigInt(0), owner, owner],
     });
 
     const { data : withdrawData, isLoading, isSuccess, write : withdraw } = useContractWrite(withdrawConfig);
@@ -97,7 +97,7 @@ export default function WithdrawSlider() {
   
     return (
       <Box width={500}>
-        <Typography id="input-slider" color={theme.palette.text.secondary} gutterBottom>
+        <Typography id="input-slider" color={theme.palette.text.secondary} paddingBottom={4} display={'flex'} justifyContent={'center'}>
           Select Amout of Vault Shares to withdraw
         </Typography>
         <Grid container spacing={9} alignItems="center" paddingBottom={4}>
@@ -139,7 +139,7 @@ export default function WithdrawSlider() {
         </Grid>
         <Grid container alignItems={'center'}>
           <Grid item xs={4}>
-            <TextField id="outlined-basic" label="Withdraw Shares from Vault" variant="outlined" onChange={handleInputChange}/>
+            <TextField id="outlined-basic" label="Withdraw Shares" variant="outlined" onChange={handleInputChange}/>
           </Grid>
           <Grid item xs={4}>
             <Typography variant="h6" component="div" paddingX={3}>
@@ -147,7 +147,7 @@ export default function WithdrawSlider() {
             </Typography>
           </Grid>
           <Grid item xs={4} justifyContent={'flex-end'}>
-            <Button variant="contained" size="large" onClick={() => withdraw?.()}>Withdraw Shares</Button>
+            <Button variant="contained" size="large" onClick={() => withdraw?.()}>Withdraw</Button>
           </Grid>
         </Grid>
         <Grid container spacing={2} alignItems="center" justifyContent='center' marginTop={2}>

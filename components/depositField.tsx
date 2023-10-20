@@ -14,11 +14,11 @@ export function DepositField() {
 
     return(
         <Box>
-            <Grid container direction="row" justifyContent="center" alignItems="center" paddingBottom={4}>
-              <Grid item xs justifyContent={'flex-start'}>
+            <Grid container direction="row"  paddingBottom={4} >
+              <Grid item xs display={'flex'} justifyContent={'flex-start'}>
                 <Button onClick={() => setToggle(true)} variant="contained">Deposit</Button>
               </Grid>
-              <Grid item xs justifyContent={'flex-end'}>
+              <Grid item xs display={'flex'} justifyContent={'flex-end'}>
                 <Button onClick={() => setToggle(false)} variant="contained">Withdraw</Button>
               </Grid>
 
