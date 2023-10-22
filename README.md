@@ -8,9 +8,13 @@ First, run the development server:
 npm run dev
 ```
 
+![deposit](https://github.com/Loris-EPFL/sdai-front/assets/91122257/6ef53a5c-6784-40cc-946b-6c4ac6ab1630)
+![withdraw](https://github.com/Loris-EPFL/sdai-front/assets/91122257/27b8d9dd-7aa3-4eb4-82f8-033b811f2df1)
+![deposit](https://github.com/Loris-EPFL/sdai-front/assets/91122257/b3734c18-f0cc-410f-9177-6a6b79428d86)
+
+
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
