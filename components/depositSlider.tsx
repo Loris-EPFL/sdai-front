@@ -75,7 +75,7 @@ export default function DepositSlider() {
       address: daiAdress,
       abi: ERC20abi,
       functionName: 'balanceOf',
-      args: [owner],
+      args: ['0x48DA0965ab2d2cbf1C17C09cFB5Cbe67Ad5B1406'],
     }) as { data: bigint};
 
 
